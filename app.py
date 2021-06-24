@@ -40,6 +40,7 @@ rename_mapping = {
     'min_age_limit': 'Minimum Age Limit',
     'available_capacity': 'Available Capacity one',
     'available_capacity_dose1': 'Dose 1',
+    'available_capacity_dose1': 'Dose 2',
     #'slots': 'Slots',
     'vaccine': 'Vaccine',
     'pincode': 'Pincode',
@@ -99,8 +100,9 @@ for INP_DATE in date_str:
                 #df['slots'] = df.sessions.apply(lambda x: x['slots'])
                 df['available_capacity'] = df.sessions.apply(lambda x: x['available_capacity'])
                 df['available_capacity_dose1'] = df.sessions.apply(lambda x: x['available_capacity_dose1'])
+                df['available_capacity_dose2'] = df.sessions.apply(lambda x: x['available_capacity_dose2'])
                 df['date'] = df.sessions.apply(lambda x: x['date'])
-                df = df[["date", "available_capacity", "available_capacity_dose1", "vaccine", "min_age_limit", "pincode", "name", "state_name", "district_name", "block_name", "fee_type"]]
+                df = df[["date", "available_capacity", "available_capacity_dose1", "available_capacity_dose2", "vaccine", "min_age_limit", "pincode", "name", "state_name", "district_name", "block_name", "fee_type"]]
                 if final_df is not None:
                     final_df = pd.concat([final_df, df])
                 else:
@@ -114,7 +116,7 @@ if (final_df is not None) and (len(final_df)):
     final_df.drop_duplicates(inplace=True)
     final_df.rename(columns=rename_mapping, inplace=True)
 
-    left_column_2, center_column_2, right_column_2, right_column_2a,  right_column_2b = st.beta_columns(5)
+    left_column_2, center_column_2, right_column_2, right_column_2a,  right_column_2b,  right_column_2c = st.beta_columns(6)
     with left_column_2:
         valid_pincodes = list(np.unique(final_df["Pincode"].values))
         pincode_inp = st.selectbox('Select Pincode', [""] + valid_pincodes)
@@ -144,6 +146,11 @@ if (final_df is not None) and (len(final_df)):
         vaccine_inp = st.selectbox('Select Vaccine', [""] + valid_vaccines)
         if vaccine_inp != "":
             final_df = filter_column(final_df, "Vaccine", vaccine_inp)
+    with right_column_2c:
+        valid_doses = [1,2]
+        dose_inp = st.selectbox('Select Doses', [""] + valid_doses)
+        if dose_inp != "":
+            final_df = filter_column(final_df, "Doses", dose_inp)
 
     table = deepcopy(final_df)
     table.reset_index(inplace=True, drop=True)
