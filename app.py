@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 st.set_page_config(layout='wide',
                    initial_sidebar_state='collapsed',
-                   page_icon="https://www.cowin.gov.in/favicon.ico",
+                   page_icon="http://nasbeer.com/wp-content/uploads/2019/08/cropped-Original-3.png",
                    page_title="CoWIN Slot Availability Checker | Nasbeer")
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
