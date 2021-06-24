@@ -36,15 +36,16 @@ def Pageviews():
 mapping_df = load_mapping()
 
 rename_mapping = {
-    'date': 'Date',
-    'min_age_limit': 'Minimum Age Limit',
-    'available_capacity': 'Available Capacity',
-    'available_capacity_dose1': 'Dose 1',
-    'available_capacity_dose2': 'Dose 2',
+    'date': 'Available Dates',
+    'min_age_limit': 'Age Limit',
+    'available_capacity': 'No of Vaccines',
+    'available_capacity_dose1': 'First Dose',
+    'available_capacity_dose2': 'Second Dose',
     #'slots': 'Slots',
     'vaccine': 'Vaccine',
     'pincode': 'Pincode',
     'name': 'Hospital Name',
+    'address': 'Address',
     # 'state_name': 'State',
     # 'district_name': 'District',
     'block_name': 'Block Name',
@@ -58,10 +59,10 @@ valid_states = list(np.unique(mapping_df["state_name"].values))
 
 left_column_1, center_column_1, right_column_1 = st.beta_columns(3)
 with left_column_1:
-    numdays = st.slider('Select Date Range starting from today', 0, 100, 3)
+    numdays = st.slider('Select upcoming no of days from today', 0, 100, 3)
    #numdays = st.sidebar.date_input("When's your birthday", datetime.date(2019, 7, 6))
 with center_column_1:
-    state_inp = st.selectbox('Select State', [""] + valid_states)
+    state_inp = st.selectbox('Select State', ["Kerala"] + valid_states)
     if state_inp != "":
         mapping_df = filter_column(mapping_df, "state_name", state_inp)
 
@@ -102,7 +103,8 @@ for INP_DATE in date_str:
                 df['available_capacity_dose1'] = df.sessions.apply(lambda x: x['available_capacity_dose1'])
                 df['available_capacity_dose2'] = df.sessions.apply(lambda x: x['available_capacity_dose2'])
                 df['date'] = df.sessions.apply(lambda x: x['date'])
-                df = df[["date", "available_capacity", "available_capacity_dose1", "available_capacity_dose2", "vaccine", "min_age_limit", "pincode", "name", "block_name", "fee_type"]]
+               # hospital = dict("name", "**address")
+                df = df[["date", "available_capacity", "available_capacity_dose1", "available_capacity_dose2", "vaccine", "min_age_limit", "pincode", "name", "address", "block_name", "fee_type"]]
                 if final_df is not None:
                     final_df = pd.concat([final_df, df])
                 else:
@@ -124,8 +126,8 @@ if (final_df is not None) and (len(final_df)):
             final_df = filter_column(final_df, "Pincode", pincode_inp)
 
     with center_column_2:
-        valid_age = [18, 45]
-        age_inp = st.selectbox('Select Minimum Limits', [""] + valid_age)
+        valid_age = [18, 40, 45]
+        age_inp = st.selectbox('Select Age Limits', [""] + valid_age)
         if age_inp != "":
             final_df = filter_column(final_df, "Minimum Age Limit", age_inp)
 
@@ -139,13 +141,13 @@ if (final_df is not None) and (len(final_df)):
         valid_dose1 = [1]
         doseo_inp = st.selectbox('Select Dose 1', [""] + valid_dose1)
         if doseo_inp != "":
-            final_df = filter_capacity(final_df, "Dose 1", doseo_inp)
+            final_df = filter_capacity(final_df, "First Dose", doseo_inp)
 
     with right_column_2b:
         valid_dose2 = [1]
         doset_inp = st.selectbox('Select Dose 2', [""] + valid_dose2)
         if doset_inp != "":
-            final_df = filter_column(final_df, "Dose 2", doset_inp)
+            final_df = filter_column(final_df, "Second Dose", doset_inp)
 
     with right_column_2c:
         valid_vaccines = ["COVISHIELD", "COVAXIN", "SPUTNIK"]

@@ -1,5 +1,7 @@
 import streamlit as st
-from htbuilder import HtmlElement, div, ul, li, br, hr, a, p, img, styles, classes, fonts
+import matplotlib.font_manager
+from IPython.core.display import HTML
+from htbuilder import HtmlElement, div, ul, li, br, hr, a, p, img, styles, table, thead, classes, fonts
 from htbuilder.units import percent, px
 from htbuilder.funcs import rgba, rgb
 
@@ -15,8 +17,24 @@ def layout(*args):
     style = """
     <style>
       # MainMenu {visibility: hidden;}
+      link, a{
+        color:#fff;
+      }
       footer {visibility: hidden;}
-     .stApp { bottom: 70px; }
+        table {font-family:sans-serif;}
+        }
+        thead {position:relative;display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;}
+     .stApp { bottom: 40px; }
+     @media only screen and (max-width: 480px) {
+        table, thead, tbody{overflow-x:scroll !important;
+        max-width:480px;
+        }
+     }
+     css-8xv65a{
+     display:none;
+     }
     </style>
     """
 
@@ -25,11 +43,16 @@ def layout(*args):
         left=0,
         bottom=0,
         margin=px(0, 0, 0, 0),
+        backgroundColor="#333",
+        padding=px(10,0,0,0),
         width=percent(100),
-        color="black", 
+        color="#fff",
         text_align="center",
-        height="auto",
+        height="fit-content",
         opacity=1
+    )
+    style_table = styles(
+        backgroundColor="#09c"
     )
 
 
@@ -39,6 +62,10 @@ def layout(*args):
     )(
         body
     )
+    thead = table(
+        style=style_table
+    )
+
 
     st.markdown(style, unsafe_allow_html=True)
 
@@ -50,14 +77,16 @@ def layout(*args):
             body(arg)
 
     st.markdown(str(foot), unsafe_allow_html=True)
+    st.markdown(str(thead), unsafe_allow_html=True)
 
 
 def footer(inp_views):
     myargs = [
+
         "Page Visits - ", str(inp_views),
         br(),
-        "Created by ",
-        link("https://nasbeer.com", "Nasbeer Ahammed"),
+        "&copy; 2021 | All Rights Reserved | Created by ",
+        link("https://nasbeer.com", "<span style='color:#fff;text-decoration:none;'>Nasbeer Ahammed</span>"),
         "     ",
         
     ]
