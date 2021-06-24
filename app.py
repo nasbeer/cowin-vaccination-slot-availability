@@ -14,7 +14,7 @@ from footer_utils import image, link, layout, footer
 st.set_page_config(layout='wide',
                    initial_sidebar_state='collapsed',
                    page_icon="https://www.cowin.gov.in/favicon.ico",
-                   page_title="CoWIN Vaccination Slot Availability")
+                   page_title="CoWIN Slot Availability Checker | Nasbeer")
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def load_mapping():
@@ -48,8 +48,8 @@ rename_mapping = {
     'fee_type' : 'Fees'
     }
 
-st.title('CoWIN Vaccination Slot Availability')
-st.info('The CoWIN APIs are geo-fenced so sometimes you may not see an output! Please try after sometime ')
+st.title('CoWIN Slot Availability Checker')
+st.info('The CoWIN APIs are geo-fenced so sometimes you may not see an output! Please try after sometime if its showing error ')
 
 valid_states = list(np.unique(mapping_df["state_name"].values))
 
@@ -66,7 +66,7 @@ with center_column_1:
 mapping_dict = pd.Series(mapping_df["district id"].values,
                          index = mapping_df["district name"].values).to_dict()
 
-# numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
+ numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
 unique_districts = list(mapping_df["district name"].unique())
 unique_districts.sort()
 with right_column_1:
