@@ -40,7 +40,7 @@ rename_mapping = {
     'min_age_limit': 'Minimum Age Limit',
     'available_capacity': 'Available Capacity one',
     'available_capacity_dose1': 'Dose 1',
-    'available_capacity_dose1': 'Dose 2',
+    'available_capacity_dose2': 'Dose 2',
     #'slots': 'Slots',
     'vaccine': 'Vaccine',
     'pincode': 'Pincode',
@@ -69,7 +69,7 @@ with center_column_1:
 mapping_dict = pd.Series(mapping_df["district id"].values,
                          index = mapping_df["district name"].values).to_dict()
 
-numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
+#numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
 #numdays = st.sidebar.date_input("When's your birthday", datetime.date(2019, 7, 6))
 unique_districts = list(mapping_df["district name"].unique())
 unique_districts.sort()
