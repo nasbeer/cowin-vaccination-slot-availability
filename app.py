@@ -144,7 +144,7 @@ if (final_df is not None) and (len(final_df)):
     table.reset_index(inplace=True, drop=True)
     st.table(table)
 else:
-    st.error("Unable to fetch data currently, please try after sometime")
+    st.error("Unable to fetch data currently, please try with other set of data..")
 
 # footer="""<style>
 # a:link , a:visited{
