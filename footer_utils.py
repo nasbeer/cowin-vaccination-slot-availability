@@ -1,6 +1,4 @@
 import streamlit as st
-import matplotlib.font_manager
-from IPython.core.display import HTML
 from htbuilder import HtmlElement, div, ul, li, br, hr, a, p, img, styles, table, thead, classes, fonts
 from htbuilder.units import percent, px
 from htbuilder.funcs import rgba, rgb
