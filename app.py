@@ -148,7 +148,7 @@ if (final_df is not None) and (len(final_df)):
             final_df = filter_column(final_df, "Dose 2", doset_inp)
 
     with right_column_2c:
-        valid_vaccines = ["COVISHIELD", "COVAXIN"]
+        valid_vaccines = ["COVISHIELD", "COVAXIN", "SPUTNIK"]
         vaccine_inp = st.selectbox('Select Vaccine', [""] + valid_vaccines)
         if vaccine_inp != "":
             final_df = filter_column(final_df, "Vaccine", vaccine_inp)
