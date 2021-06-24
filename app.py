@@ -129,7 +129,7 @@ if (final_df is not None) and (len(final_df)):
         valid_age = [18, 40, 45]
         age_inp = st.selectbox('Select Age Limits', [""] + valid_age)
         if age_inp != "":
-            final_df = filter_column(final_df, "Minimum Age Limit", age_inp)
+            final_df = filter_column(final_df, "Age Limit", age_inp)
 
     with right_column_2:
         valid_payments = ["Free", "Paid"]
