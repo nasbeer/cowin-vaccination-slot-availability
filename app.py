@@ -38,14 +38,16 @@ mapping_df = load_mapping()
 rename_mapping = {
     'date': 'Date',
     'min_age_limit': 'Minimum Age Limit',
-    'available_capacity': 'Available Capacity',
+    'available_capacity': 'Available Capacity one',
+    'available_capacity_dose1': 'Dose 1',
+    'slots': 'Slots',
     'vaccine': 'Vaccine',
     'pincode': 'Pincode',
     'name': 'Hospital Name',
-    'state_name' : 'State',
-    'district_name' : 'District',
+    'state_name': 'State',
+    'district_name': 'District',
     'block_name': 'Block Name',
-    'fee_type' : 'Fees'
+    'fee_type': 'Fees'
     }
 
 st.title('CoWIN Slot Availability Checker')
@@ -55,8 +57,8 @@ valid_states = list(np.unique(mapping_df["state_name"].values))
 
 left_column_1, center_column_1, right_column_1 = st.beta_columns(3)
 with left_column_1:
-    numdays = st.slider('Select Date Range', 0, 100, 3)
-
+    numdays = st.slider('Select Date Range starting from today', 0, 100, 3)
+   #numdays = st.sidebar.date_input("When's your birthday", datetime.date(2019, 7, 6))
 with center_column_1:
     state_inp = st.selectbox('Select State', [""] + valid_states)
     if state_inp != "":
@@ -66,7 +68,8 @@ with center_column_1:
 mapping_dict = pd.Series(mapping_df["district id"].values,
                          index = mapping_df["district name"].values).to_dict()
 
-#numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
+numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
+#numdays = st.sidebar.date_input("When's your birthday", datetime.date(2019, 7, 6))
 unique_districts = list(mapping_df["district name"].unique())
 unique_districts.sort()
 with right_column_1:
@@ -93,9 +96,11 @@ for INP_DATE in date_str:
                 df = df.explode("sessions")
                 df['min_age_limit'] = df.sessions.apply(lambda x: x['min_age_limit'])
                 df['vaccine'] = df.sessions.apply(lambda x: x['vaccine'])
+                df['slots'] = df.sessions.apply(lambda x: x['slots'])
                 df['available_capacity'] = df.sessions.apply(lambda x: x['available_capacity'])
+                df['available_capacity_dose1'] = df.sessions.apply(lambda x: x['available_capacity_dose1'])
                 df['date'] = df.sessions.apply(lambda x: x['date'])
-                df = df[["date", "available_capacity", "vaccine", "min_age_limit", "pincode", "name", "state_name", "district_name", "block_name", "fee_type"]]
+                df = df[["date", "available_capacity", "available_capacity_dose1", "vaccine", "slots", "min_age_limit", "pincode", "name", "state_name", "district_name", "block_name", "fee_type"]]
                 if final_df is not None:
                     final_df = pd.concat([final_df, df])
                 else:
@@ -118,7 +123,7 @@ if (final_df is not None) and (len(final_df)):
 
     with center_column_2:
         valid_age = [18, 45]
-        age_inp = st.selectbox('Select Minimum Age', [""] + valid_age)
+        age_inp = st.selectbox('Select Minimum Limits', [""] + valid_age)
         if age_inp != "":
             final_df = filter_column(final_df, "Minimum Age Limit", age_inp)
 
