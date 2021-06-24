@@ -66,7 +66,7 @@ with center_column_1:
 mapping_dict = pd.Series(mapping_df["district id"].values,
                          index = mapping_df["district name"].values).to_dict()
 
-numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
+#numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
 unique_districts = list(mapping_df["district name"].unique())
 unique_districts.sort()
 with right_column_1:
