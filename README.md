@@ -1,3 +1,9 @@
+# Demo
+
+URL : https://cowinslotchecker.herokuapp.com/
+Developer Name : Nasbeer Ahammed
+Developer URL : http://nasbeer.com
+
 # CoWIN vaccination slot availability using Python
 
 Script to check the available slots for Covid-19 Vaccination Centers from CoWIN API in India. This CANNOT book slots automatically. The Indian Government had blocked the API for crawlers, but we are good to go.
@@ -45,3 +51,4 @@ If `Anaconda` doesn't appear on the first line, you are using a different versio
 
   Local URL: http://localhost:8501
   Network URL: http://192.168.1.7:8501
+  
